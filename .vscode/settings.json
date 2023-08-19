@@ -5,6 +5,14 @@
     "*.svelte": "svelte",
     "*.svg": "html",
     ".env.production": "env",
-    "scanner.h": "c"
+    "scanner.h": "c",
+    "compiler.h": "c",
+    "common.h": "c",
+    "value.h": "c",
+    "__locale": "c",
+    "locale": "c",
+    "vm.h": "c",
+    "stddef.h": "c",
+    "debug.h": "c"
   }
 }
