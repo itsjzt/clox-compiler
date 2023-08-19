@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "*.css": "css",
+    "*.mdx": "mdx",
+    "*.svelte": "svelte",
+    "*.svg": "html",
+    ".env.production": "env",
+    "scanner.h": "c"
+  }
+}
