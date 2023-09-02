@@ -256,7 +256,7 @@ Token scanToken()
 
   if (isAlpha(c))
   {
-    identifier(c);
+    return identifier(c);
   }
 
   if (isDigit(c))

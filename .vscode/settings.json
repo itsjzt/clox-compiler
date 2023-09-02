@@ -13,6 +13,21 @@
     "locale": "c",
     "vm.h": "c",
     "stddef.h": "c",
-    "debug.h": "c"
+    "debug.h": "c",
+    "__bit_reference": "c",
+    "__node_handle": "c",
+    "atomic": "c",
+    "bitset": "c",
+    "__memory": "c",
+    "limits": "c",
+    "optional": "c",
+    "ratio": "c",
+    "system_error": "c",
+    "tuple": "c",
+    "type_traits": "c",
+    "vector": "c",
+    "chrono": "c",
+    "cstddef": "c",
+    "stdarg.h": "c"
   }
 }
