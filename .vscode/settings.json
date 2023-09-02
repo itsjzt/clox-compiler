@@ -28,6 +28,16 @@
     "vector": "c",
     "chrono": "c",
     "cstddef": "c",
-    "stdarg.h": "c"
+    "stdarg.h": "c",
+    "string": "c",
+    "iosfwd": "c",
+    "object.h": "c",
+    "memory.h": "c",
+    "__hash_table": "c",
+    "__split_buffer": "c",
+    "array": "c",
+    "iterator": "c",
+    "string_view": "c",
+    "unordered_map": "c"
   }
 }
