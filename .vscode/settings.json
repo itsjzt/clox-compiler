@@ -1,5 +1,11 @@
 {
   "files.associations": {
+    "*.json.liquid": "json",
+    "*.yaml.liquid": "yaml",
+    "*.md.liquid": "markdown",
+    "*.js.liquid": "liquid-javascript",
+    "*.css.liquid": "liquid-css",
+    "*.scss.liquid": "liquid-scss",
     "*.css": "css",
     "*.mdx": "mdx",
     "*.svelte": "svelte",
@@ -38,6 +44,8 @@
     "array": "c",
     "iterator": "c",
     "string_view": "c",
-    "unordered_map": "c"
+    "unordered_map": "c",
+    "charconv": "c",
+    "variant": "c"
   }
 }
