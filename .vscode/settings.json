@@ -46,6 +46,7 @@
     "string_view": "c",
     "unordered_map": "c",
     "charconv": "c",
-    "variant": "c"
+    "variant": "c",
+    "table.h": "c"
   }
 }
