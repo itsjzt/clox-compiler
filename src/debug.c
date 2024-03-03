@@ -33,15 +33,15 @@ int disassembleInstruction(Chunk *chunk, int offset)
   printf("%04d ", offset);
 
   // if both instructions were from same line
-  if (offset > 0 &&
-      chunk->lines[offset] == chunk->lines[offset - 1])
-  {
+  if (
+    offset > 0 &&
+    chunk->lines[offset] == chunk->lines[offset - 1]
+  ) {
     printf("  | ");
   }
-  else
-  {
+  else {
     printf("%4d ", chunk->lines[offset]);
-  }
+  } 
 
   uint8_t instruction = chunk->code[offset];
   switch (instruction)
@@ -74,6 +74,15 @@ int disassembleInstruction(Chunk *chunk, int offset)
     return simpleInstruction("OP_GREATER", offset);
   case OP_LESS:
     return simpleInstruction("OP_LESS", offset);
+  case OP_PRINT:
+    return simpleInstruction("OP_PRINT", offset);
+  case OP_POP:
+    return simpleInstruction("OP_POP", offset);
+  case OP_DEFINE_GLOBAL:
+    return constantInstruction("OP_DEFINE_GLOBAL", chunk, offset);
+  case OP_GET_GLOBAL:
+    return constantInstruction("OP_GET_GLOBAL", chunk, offset);
+    // BREAK 21.4
   default:
     printf("Unknown opcode %d\n", instruction);
     return offset + 1;

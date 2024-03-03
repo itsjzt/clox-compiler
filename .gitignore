@@ -1,2 +1,3 @@
-a.out
 main.dSYM/*
+.DS_Store
+build/

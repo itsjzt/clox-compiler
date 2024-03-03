@@ -36,11 +36,13 @@ void initVM()
   resetStack();
   vm.objects = NULL;
   initTable(&vm.strings);
+  initTable(&vm.globals);
 }
 
 void freeVM()
 {
   freeTable(&vm.strings);
+  freeTable(&vm.globals);
   freeObjects();
 }
 
@@ -49,12 +51,12 @@ static Value peek(int distance)
   return vm.stackTop[-1 - distance];
 }
 
-static bool isFalsey(Value value)
+static bool isFalsy(Value value)
 {
   return IS_NIL(value) || (IS_BOOL(value) && !AS_BOOL(value));
 }
 
-static void contatenate()
+static void concatenate()
 {
   ObjString *b = AS_STRING(pop());
   ObjString *a = AS_STRING(pop());
@@ -73,6 +75,7 @@ static void contatenate()
 static InterpretResult run()
 {
 #define READ_BYTE() (*vm.ip++)
+#define READ_STRING() AS_STRING(READ_CONSTANT())
 #define READ_CONSTANT() (vm.chunk->constants.values[READ_BYTE()])
 #define BINARY_OP(valueType, op)                    \
   do                                                \
@@ -98,6 +101,7 @@ static InterpretResult run()
       printf(" ]");
     }
     printf("\n");
+    printf("vm.ip %i; vm.code %i; offset: %i \n", vm.ip, vm.chunk->code, vm.ip - vm.chunk->code);
     disassembleInstruction(vm.chunk, (int)(vm.ip - vm.chunk->code));
 #endif
 
@@ -106,14 +110,14 @@ static InterpretResult run()
     {
     case OP_NOT:
     {
-      push(BOOL_VAL(isFalsey(pop())));
+      push(BOOL_VAL(isFalsy(pop())));
       break;
     }
     case OP_ADD:
     {
       if (IS_STRING(peek(0)) && IS_STRING(peek(1)))
       {
-        contatenate();
+        concatenate();
       }
       else if (IS_NUMBER(peek(0)) && IS_NUMBER(peek(1)))
       {
@@ -192,6 +196,37 @@ static InterpretResult run()
       BINARY_OP(BOOL_VAL, <);
       break;
     }
+    case OP_PRINT:
+    {
+      printValue(pop());
+      printf("\n");
+      break;
+    }
+    case OP_POP:
+    {
+      pop();
+      break;
+    }
+    case OP_DEFINE_GLOBAL:
+    {
+      ObjString *name = READ_STRING();
+      tableSet(&vm.globals, name, peek(0));
+      pop();
+      break;
+    }
+    case OP_GET_GLOBAL:
+    {
+      ObjString *name = READ_STRING();
+      Value value;
+      if (!tableGet(&vm.globals, name, &value))
+      {
+        runtimeError("Undefined variable '%s'.", name->chars);
+        return INTERPRET_RUNTIME_ERROR;
+      }
+
+      push(value);
+      break;
+    }
     case OP_RETURN:
     {
       printValue(pop());
@@ -202,6 +237,7 @@ static InterpretResult run()
   }
 
 #undef READ_BYTE
+#undef READ_STRING
 #undef READ_CONSTANT
 #undef BINARY_OP
 }
