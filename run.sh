@@ -1,2 +1,2 @@
 ./build.sh
-./build/a.out
+./bin/a.out
